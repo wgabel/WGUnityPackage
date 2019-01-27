@@ -3,28 +3,42 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using UnityEngine;
+using WGPackage.Data.Serialization;
 
-public class SimpleDataTest : MonoBehaviour
+namespace WGPackage.Data.Serialization.Test
 {
-    public string someText;
-    public List<SimpleDataTest> somecollection;
-    public TextAsset file;
-
-    [ContextMenu("Run test")]
-    public void TestSerialisation()
+    public class SimpleDataTest : MonoBehaviour
     {
-        Soldier solider = new Soldier ();
-        solider.SoldierName = "Jerry";
-        solider.someText = "ssdsd";
-        solider.SaveToJson<Soldier> ();
+        public string someText;
+        public List<SimpleDataTest> somecollection;
+        public TextAsset file;
 
-        Pesant pesant = new Pesant ();
-        pesant.SoldierName = "Bob";
-        pesant.Hp = 2;
-        pesant.Soldiers = new List<Soldier> () { new Soldier () { SoldierName="PesantSoldier 1" }, new Soldier () { SoldierName = "PesantSoldier 2" } };
-        string peasentPath = pesant.SaveToJson<Pesant> ();
+        [ContextMenu ( "Run test" )]
+        public void TestSerialisation ()
+        {
+            BaseEntityModel solider = new BaseEntityModel ();
+            solider.BaseName = "Jerry";
+            string soldierPath = BaseSerializer.SaveToJson<BaseEntityModel> ( solider, solider.BaseName );
 
-        var loaded = Soldier.LoadFromJson ( peasentPath );
-        Debug.Log ( loaded + " >> "+ loaded.GetType () );
+            Pesant pesant = new Pesant ()
+            {
+                BaseName = "bob",
+                Hp = 4,
+                Soldiers = new List<BaseEntityModel> ()
+            {
+                new BaseEntityModel () { BaseName="PesantSoldier 1" },
+                new BaseEntityModel () { BaseName = "PesantSoldier 2" }
+            }
+            };
+
+            string peasentPath = BaseSerializer.SaveToJson<Pesant> ( pesant, pesant.BaseName );
+
+            var loaded = BaseSerializer.LoadFromJson ( peasentPath );
+            Debug.Log ( loaded + " >> " + loaded.GetType () );
+
+            loaded = BaseSerializer.LoadFromJson ( soldierPath );
+            Debug.Log ( loaded + " >> " + loaded.GetType () );
+
+        }
     }
 }

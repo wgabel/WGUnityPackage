@@ -9,62 +9,12 @@ using Newtonsoft.Json;
 using UnityEditor;
 #endif
 
-[System.Serializable]
-public class Soldier
+namespace WGPackage.Data.Serialization.Test
 {
-    [SerializeField]
-    public string SoldierName { get; set; }
-
-    public string someText = "";
-
-    public virtual string SaveToXml<T> ( )
+    [System.Serializable]
+    public class BaseEntityModel
     {
-        var serializer = new XmlSerializer ( typeof ( T ) );
-        string path = GetPath<T> ();
-        var stream = new FileStream ( path, FileMode.Create );
-        serializer.Serialize ( stream, this );
-        stream.Close ();
-        return path;
-    }
-
-    public virtual string SaveToJson<T> ( )
-    {
-        string json = JsonConvert.SerializeObject ( this, GetSettings() );
-        string path = GetPath<T> ("json");
-        var stream = new FileStream ( path, FileMode.Create );
-        byte[] info = new UTF8Encoding ( true ).GetBytes ( json );
-        stream.Write ( info, 0, info.Length );
-        stream.Close();
-#if UNITY_EDITOR
-        AssetDatabase.Refresh ();
-#endif
-        return path;
-    }
-
-    protected static JsonSerializerSettings GetSettings()
-    {
-        return new JsonSerializerSettings () { TypeNameHandling = TypeNameHandling.All };
-    }
-
-    protected string GetPath<T>(string extension = "txt") =>
-        Application.dataPath + Path.DirectorySeparatorChar + typeof ( T ) + "_" + SoldierName + "."+ extension;
-
-    public virtual T LoadFromXml <T>( string path = "" ) where T : Soldier
-    {
-        var serializer = new XmlSerializer ( typeof ( T ) );
-        var stream = new FileStream ( string.IsNullOrEmpty ( path ) ? GetPath<T>() : path, FileMode.Open );
-        var container = serializer.Deserialize ( stream ) as T;
-        stream.Close ();
-        return container;
-    }
-
-    public static object LoadFromJson( string path )
-    {
-        var stream = new FileStream ( path, FileMode.Open );
-        TextReader tr = new StreamReader ( stream );
-        var deserializedProduct = JsonConvert.DeserializeObject ( tr.ReadToEnd (), GetSettings () );
-        stream.Close ();
-        tr.Close ();
-        return deserializedProduct;
+        [SerializeField]
+        public virtual string BaseName { get; set; }
     }
 }

@@ -1,1 +1,0 @@
-{"$type":"Pesant, Assembly-CSharp","someText":"","Hp":2,"Soldiers":{"$type":"System.Collections.Generic.List`1[[Soldier, Assembly-CSharp]], mscorlib","$values":[{"$type":"Soldier, Assembly-CSharp","someText":"","SoldierName":"PesantSoldier 1"},{"$type":"Soldier, Assembly-CSharp","someText":"","SoldierName":"PesantSoldier 2"}]},"SoldierName":"Bob"}
