@@ -29,7 +29,7 @@ public class Soldier
 
     public virtual string SaveToJson<T> ( )
     {
-        string json = JsonConvert.SerializeObject ( this );
+        string json = JsonConvert.SerializeObject ( this, GetSettings() );
         string path = GetPath<T> ("json");
         var stream = new FileStream ( path, FileMode.Create );
         byte[] info = new UTF8Encoding ( true ).GetBytes ( json );
@@ -39,6 +39,11 @@ public class Soldier
         AssetDatabase.Refresh ();
 #endif
         return path;
+    }
+
+    protected static JsonSerializerSettings GetSettings()
+    {
+        return new JsonSerializerSettings () { TypeNameHandling = TypeNameHandling.All };
     }
 
     protected string GetPath<T>(string extension = "txt") =>
@@ -51,5 +56,15 @@ public class Soldier
         var container = serializer.Deserialize ( stream ) as T;
         stream.Close ();
         return container;
+    }
+
+    public static object LoadFromJson( string path )
+    {
+        var stream = new FileStream ( path, FileMode.Open );
+        TextReader tr = new StreamReader ( stream );
+        var deserializedProduct = JsonConvert.DeserializeObject ( tr.ReadToEnd (), GetSettings () );
+        stream.Close ();
+        tr.Close ();
+        return deserializedProduct;
     }
 }

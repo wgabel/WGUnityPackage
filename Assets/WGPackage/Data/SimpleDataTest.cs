@@ -22,9 +22,9 @@ public class SimpleDataTest : MonoBehaviour
         pesant.SoldierName = "Bob";
         pesant.Hp = 2;
         pesant.Soldiers = new List<Soldier> () { new Soldier () { SoldierName="PesantSoldier 1" }, new Soldier () { SoldierName = "PesantSoldier 2" } };
-        string path = pesant.SaveToJson<Pesant> ();
+        string peasentPath = pesant.SaveToJson<Pesant> ();
 
-        //Soldier loaded = pesant.LoadFromXml<Soldier> ( path );
-        //Debug.Log (loaded.GetType());
+        var loaded = Soldier.LoadFromJson ( peasentPath );
+        Debug.Log ( loaded + " >> "+ loaded.GetType () );
     }
 }
