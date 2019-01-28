@@ -9,16 +9,12 @@ namespace WGPackage.Data.Serialization.Test
 {
     public class SimpleDataTest : MonoBehaviour
     {
-        public string someText;
-        public List<SimpleDataTest> somecollection;
-        public TextAsset file;
-
         [ContextMenu ( "Run test" )]
         public void TestSerialisation ()
         {
             BaseEntityModel solider = new BaseEntityModel ();
             solider.BaseName = "Jerry";
-            string soldierPath = BaseSerializer.SaveToJson<BaseEntityModel> ( solider, solider.BaseName );
+            string soldierPath = BaseSerializer.SaveToJson<BaseEntityModel> ( solider, solider.BaseName, "tests", overwrite: true );
 
             Pesant pesant = new Pesant ()
             {
@@ -31,7 +27,7 @@ namespace WGPackage.Data.Serialization.Test
             }
             };
 
-            string peasentPath = BaseSerializer.SaveToJson<Pesant> ( pesant, pesant.BaseName );
+            string peasentPath = BaseSerializer.SaveToJson<Pesant> ( pesant, pesant.BaseName, "tests", overwrite:true );
 
             var loaded = BaseSerializer.LoadFromJson ( peasentPath );
             Debug.Log ( loaded + " >> " + loaded.GetType () );
