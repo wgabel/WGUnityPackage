@@ -12,4 +12,18 @@ namespace WGPackage.Data.Serialization.Test
         public int Hp { get; set; }
         public List<BaseEntityModel> Soldiers { get; set; }
     }
+
+    [System.Serializable]
+    public class Soldier : BaseEntityModel
+    {
+        [SerializeField]
+        public int Hp { get; set; }
+        public List<BaseEntityModel> Soldiers { get; set; }
+    }
+
+    [System.Serializable]
+    public class ChildPesant : Pesant
+    {
+        public IEnumerable<object> toys;
+    }
 }
