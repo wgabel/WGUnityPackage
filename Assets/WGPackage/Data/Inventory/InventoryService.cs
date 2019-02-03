@@ -1,15 +1,19 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace WGPackage.Data.Inventory
 {
-    class InventoryService
+    [System.Serializable]
+    public class InventoryService
     {
+        [System.Serializable]
         private class InventoryItem<T> 
         {
             public List<T> Items { get; set; }
         }
 
+        [JsonProperty("inventory")]
         private Dictionary<Type, InventoryItem<object>> inventory;
 
         public IEnumerable<object> GetItems<T> ()
