@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using WG.CORE.Voxels;
+using WGPackage.Maps.GridMap;
 
 namespace WGPackage.Rendering.ProceduralMap
 {
@@ -9,7 +11,7 @@ namespace WGPackage.Rendering.ProceduralMap
     /// Step 1 : Build a procesural mesh based on cell dataPoints. Each point can have multiple quads.
     /// Step 2 : sSet ChunkMaxSize to divide mesh into chunks
     /// </summary>
-    public class ProceduralDensityMesh
+    public class ProceduralDensityMesh //: IProceduralMesh
     {
         public static readonly string MESH_NAME = "procedural Mesh";
         IMaterialProvider _materialProvider;
@@ -32,10 +34,28 @@ namespace WGPackage.Rendering.ProceduralMap
         {
             Mesh m = new Mesh ();
             MeshData md = new MeshData ();
+            MeshWorker worker = new MeshWorker ();
+
+            //Create mesh for every voxel
+            foreach ( Voxel voxel in inputData.DataPoints )
+            {
+                if ( !voxel.Active ) continue;
+                worker.Reset ().SetInitialPoint ( voxel );
 
 
-
+                
+            }
             return m;
+        }
+
+        private bool CheckIfVoxelIsOutSide ( IntVector2 point, int mapSize )
+        {
+            return point.x < 0 || point.x >= mapSize || point.z < 0 || point.z >= mapSize;
+        }
+
+        private int HasNeighbourAVertToUse()
+        {
+            return -1;
         }
     }
 
@@ -53,9 +73,56 @@ namespace WGPackage.Rendering.ProceduralMap
         }
     }
 
+    public class MeshWorker
+    {
+        public float[] CornerHeights { get; set; }
+        public int[] TempVertsIndexes { get; set; }
+        public int[] TempTris { get; set; }
+        public Vector3 NewV { get; set; }
+        public Vector3 Point { get; set; }
+        public bool[] InactiveNeighbours { get; private set; }
+        public int goodVertIndex = -1;
+        public MeshWorker ( )
+        {
+            Reset ();
+        }
+
+        public MeshWorker Reset ()
+        {
+            CornerHeights = new float[4];
+            TempVertsIndexes = new int[5];
+            TempTris = new int[12];
+            NewV = new Vector3 ();
+            InactiveNeighbours = new bool[4];
+            goodVertIndex = -1;
+            return this;
+        }
+
+        public void SetInitialPoint ( Voxel voxel )
+        {
+            Point = voxel.Position.ToVector3;
+        }
+
+        public void SetNeighbourState ( int index, bool newState )
+        {
+            InactiveNeighbours [ index ] = newState;
+        }
+
+        internal bool SetNeighbourGoodVert ( int v )
+        {
+            goodVertIndex = v;
+            return v != -1;
+        }
+
+        public void SetTempVertsIndexes ( int index )
+        {
+            TempVertsIndexes[index] = goodVertIndex;
+        }
+    }
+
     public class MeshInputData
     {
-        public Voxel DataPoint { get; set; }
+        public Voxel[] DataPoints { get; set; }
         public float QuadSize { get; set; }
         public int CellDivision { get; set; }
     }

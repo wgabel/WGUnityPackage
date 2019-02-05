@@ -175,7 +175,6 @@ namespace WG.CORE.Voxels
             IntVector2 tempPoint = new IntVector2 ();
             for ( int n = 0; n < 3; n++ )
             {
-
                 int index = neighboursForVerts [ corner ] [ n ];
                 tempPoint.x = neighbours [ index ].x + pointPosition.x;
                 tempPoint.z = neighbours [ index ].z + pointPosition.z;

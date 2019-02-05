@@ -26,10 +26,8 @@ namespace WGPackage.Maps.GridMap
             }
         }
 
-        public IntVector2[] GetTilesPositions()
-        {
-            return grid.Aggregate ( new List<IntVector2>(), (sum, next) => AddAndReturn(sum, new IntVector2(next.X,next.Y)) ).ToArray();
-        }
+        public IntVector2[] GetTilesPositions() =>
+            grid.Aggregate ( new List<IntVector2>(), (sum, next) => AddAndReturn(sum, new IntVector2(next.X,next.Y)) ).ToArray();
 
         private List<IntVector2> AddAndReturn ( List<IntVector2> list, IntVector2 element )
         {
