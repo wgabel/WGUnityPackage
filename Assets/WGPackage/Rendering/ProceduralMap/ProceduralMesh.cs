@@ -58,12 +58,11 @@ namespace WG.CORE.Voxels
             new Vector3( 0 ,0,0 ),
         };
 
+
+        // TODO : Unfuck this method
+        //Add pointsDensity per cell
         public void CreateMesh ( Voxel [] points, int mapSize, List<MonoBehaviour> noiseProviders, float scale, IMaterialProvider materialProvider )
         {
-            //if ( noiseProviders == null )
-            //{
-            //    throw new System.NullReferenceException ( "INoise providers are NULL! *GASP!*" );
-            //}
             for ( int p = 0; p < noiseProviders.Count; p++ )
             {
                 ( noiseProviders[p] as INoise ).GenerateNoiseData (mapSize);
