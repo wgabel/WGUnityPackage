@@ -8,7 +8,13 @@ namespace WGPackage.Rendering.DynamicDensityMap
         [ContextMenu ( "Run Test" )]
         public void RunTest ()
         {
-            IMapDefinition mapDefinition = new MapDefinition ( "test map", 1, 1, 1, 1, new Vector3Int ( 0, 0, 0 ) );
+            IMapDefinition mapDefinition = new MapDefinition ( 
+                name: "test map",
+                width: 1, 
+                height: 1, 
+                division: 1, 
+                divisionDepth: 3, 
+                startPosition: new Vector3Int ( 0, 0, 0 ) );
             IMapRenderer renderer = new DefaultMapRenderer ().Render ( mapDefinition );
         }
     }

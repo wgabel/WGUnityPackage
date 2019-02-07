@@ -10,5 +10,7 @@ namespace WGPackage.Rendering.DynamicDensityMap
         int Division { get; }
         int DivisionDepth { get; }
         Vector3Int StartPosition { get; }
+
+        int GetPoxelsDivisionLength { get; }
     }
 }

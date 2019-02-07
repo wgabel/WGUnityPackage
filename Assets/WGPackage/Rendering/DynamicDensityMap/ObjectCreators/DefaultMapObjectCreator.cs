@@ -28,9 +28,42 @@ namespace WGPackage.Rendering.DynamicDensityMap.ObjectCreators
         public GameObject Create ( IMapDefinition mapDefinition )
         {
             string newObjectName = GetObjectName ();
-            return new GameObject ( mapDefinition.MapName + newObjectName )
-                .AddComponent<MeshRenderer> ().SetSharedMaterial ( _materialProvider.GetMaterial () ).gameObject
-                .AddComponent<MeshFilter> ().ApplyMesh ( _meshCreator.Create ( mapDefinition, newObjectName ) ).gameObject;
+
+            GameObject root = CreateHolder ( 0, mapDefinition );
+
+            return root;
+
+            //return new GameObject ( mapDefinition.MapName + newObjectName )
+            //    .AddComponent<MeshRenderer> ().SetSharedMaterial ( _materialProvider.GetMaterial () ).gameObject
+            //    .AddComponent<MeshFilter> ().ApplyMesh ( _meshCreator.Create ( mapDefinition, newObjectName ) ).gameObject;
+        }
+
+        
+
+        private GameObject CreateHolder ( int currentDepth, IMapDefinition mapDefinition )
+        {
+            //Cells are width * height
+            //FOr each cell:
+                //Create one object?
+                //Create SPECIFIED objects.
+
+            string newObjectName = GetObjectName () + "_" + currentDepth;
+            GameObject g = new GameObject ( newObjectName );
+
+
+
+            for ( int d = 0; d < mapDefinition.GetPoxelsDivisionLength; d++ )
+            {
+                GameObject gInner = CreateHolder ( ++currentDepth, mapDefinition );
+                gInner.transform.SetParent ( g.transform );
+            }
+
+
+            if ( currentDepth < mapDefinition.DivisionDepth )
+            {
+                
+            }
+            return g;
         }
     }
 }

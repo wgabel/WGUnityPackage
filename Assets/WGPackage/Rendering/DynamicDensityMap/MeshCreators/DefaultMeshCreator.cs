@@ -4,7 +4,7 @@ namespace WGPackage.Rendering.DynamicDensityMap.MeshCreators
 {
     public class DefaultMeshCreator : IMeshCreator
     {
-        private int CreatePoxelsDivisionLength ( int division ) => ( division + 1 ) * ( division + 1 );
+        
         public Mesh Create ( IMapDefinition mapDefinition, string newMeshName = "" )
         {
             Mesh mesh = new Mesh ();
@@ -15,12 +15,12 @@ namespace WGPackage.Rendering.DynamicDensityMap.MeshCreators
             
             for ( int i = 0; i < mapDefinition.DivisionDepth; i++ )
             {
-                for ( int p = 0; p < CreatePoxelsDivisionLength( mapDefinition.Division ); p++ )
+                for ( int p = 0; p < mapDefinition.GetPoxelsDivisionLength; p++ )
                 {
                     //Poxel innerPoxel = CreateInnerPoxel (rootPoxel, );
+
                 }
             }
-
             return mesh;
         }
 
@@ -33,7 +33,7 @@ namespace WGPackage.Rendering.DynamicDensityMap.MeshCreators
                 indexInParent = -1,
                 isRoot = true,
                 PositionIn3d = mapDefinition.StartPosition,
-                innerCells = new Poxel[CreatePoxelsDivisionLength ( mapDefinition.Division )],
+                innerCells = new Poxel[mapDefinition.GetPoxelsDivisionLength],
                 depth = 0
             };
         }
@@ -46,7 +46,7 @@ namespace WGPackage.Rendering.DynamicDensityMap.MeshCreators
                 indexInParent = indexInParent,
                 isRoot = false,
                 PositionIn3d = position,
-                innerCells = new Poxel[CreatePoxelsDivisionLength ( mapDefinition.Division )],
+                innerCells = new Poxel[mapDefinition.GetPoxelsDivisionLength],
                 depth = depth,
             };
         }

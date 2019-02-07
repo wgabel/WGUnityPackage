@@ -11,6 +11,14 @@ namespace WGPackage.Rendering.DynamicDensityMap
         public int DivisionDepth { get; }
         public Vector3Int StartPosition { get; }
 
+        public int GetPoxelsDivisionLength
+        {
+            get
+            {
+                return ( Division + 1 ) * ( Division + 1 );
+            }
+        } 
+
         public MapDefinition ( string name, int width, int height, int division, int divisionDepth, Vector3Int startPosition )
         {
             this.MapName = name;
