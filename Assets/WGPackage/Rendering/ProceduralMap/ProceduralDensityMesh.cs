@@ -4,6 +4,8 @@ using System.IO;
 using UnityEngine;
 using WG.CORE.Voxels;
 using WGPackage.Maps.GridMap;
+using WGPackage.Rendering.DynamicDensityMap.Helpers;
+using WGPackage.Rendering.DynamicDensityMap.MaterialProviders;
 
 namespace WGPackage.Rendering.ProceduralMap
 {
@@ -11,7 +13,7 @@ namespace WGPackage.Rendering.ProceduralMap
     /// Step 1 : Build a procesural mesh based on cell dataPoints. Each point can have multiple quads.
     /// Step 2 : sSet ChunkMaxSize to divide mesh into chunks
     /// </summary>
-    public class ProceduralDensityMesh //: IProceduralMesh
+    public class ProceduralDensityMesh
     {
         public static readonly string MESH_NAME = "procedural Mesh";
         IMaterialProvider _materialProvider;
@@ -41,9 +43,6 @@ namespace WGPackage.Rendering.ProceduralMap
             {
                 if ( !voxel.Active ) continue;
                 worker.Reset ().SetInitialPoint ( voxel );
-
-
-                
             }
             return m;
         }
@@ -56,6 +55,11 @@ namespace WGPackage.Rendering.ProceduralMap
         private int HasNeighbourAVertToUse()
         {
             return -1;
+        }
+
+        public void CreateMesh ( Voxel[] points, int mapSize, List<MonoBehaviour> noiseProviders, float scale, IMaterialProvider materialProvider )
+        {
+            throw new NotImplementedException ();
         }
     }
 
@@ -135,16 +139,10 @@ namespace WGPackage.Rendering.ProceduralMap
             return md;
         }
 
-        public static MeshFilter ApplyMesh ( this MeshFilter meshFilter, Mesh mesh )
+        public static Transform SetPosition ( Transform transform, Vector3 newPosition )
         {
-            meshFilter.mesh = mesh;
-            return meshFilter;
-        }
-
-        public static MeshRenderer SetSharedMaterial ( this MeshRenderer renderer, Material material )
-        {
-            renderer.sharedMaterial = material;
-            return renderer;
+            transform.position = newPosition;
+            return transform;
         }
     }
 }

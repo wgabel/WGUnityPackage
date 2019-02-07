@@ -14,7 +14,18 @@ namespace WGPackage.Maps.GridMap
 			this.z = z;
 		}
 
-		public override string ToString ()
+        public IntVector2 ( Vector3 position )
+        {
+            this.x = Mathf.RoundToInt ( position.x );
+            this.z = Mathf.RoundToInt ( position.z );
+        }
+
+        public static IntVector2 operator + ( IntVector2 a, IntVector2 b )
+        {
+            return new IntVector2 ( a.x + b.x, a.z + b.z );
+        }
+
+        public override string ToString ()
 		{
 			return string.Format ("[IntVector2: x={0}, z={1}]", x, z);
 		}

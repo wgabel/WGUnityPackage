@@ -4,6 +4,7 @@ using UnityEngine;
 using WG.CORE.Voxels;
 using WGPackage.Maps.GridMap;
 using WGPackage.Maps.GridMap.MapRenderers;
+using WGPackage.Rendering.ProceduralMap;
 
 public class MapRenderTest : MonoBehaviour
 {
@@ -14,10 +15,10 @@ public class MapRenderTest : MonoBehaviour
         if ( !Application.isPlaying )
             return;
         //Render map on sreen
-        BasicMapRenderer renderer = new BasicMapRenderer ( new ProceduralMesh (), new BasicMaterialProvider ( "materials/testMaterial" ) )
-            .RenderMap ( 
-            new MapData ( "testMap", 10, 10 ),  
-            new RenderData ( 0.2f, new Vector3(), 1 ) ) as BasicMapRenderer;
+        //BasicMapRenderer renderer = new BasicMapRenderer ( )
+        //    .RenderMap ( 
+        //    new MapData ( "testMap", 3, 3 ),  
+        //    new RenderData ( 0.2f, new Vector3(), 1 ) ) as BasicMapRenderer;
     }
 }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using WG.CORE.NoiseGeneration;
 using WGPackage.Maps.GridMap;
+using WGPackage.Rendering.DynamicDensityMap.MaterialProviders;
+using WGPackage.Rendering.ProceduralMap;
 
 namespace WG.CORE.Voxels
 {
@@ -211,6 +213,11 @@ namespace WG.CORE.Voxels
         bool CheckIfOutSide ( IntVector2 point, int mapSize )
         {
             return point.x < 0 || point.x >= mapSize || point.z < 0 || point.z >= mapSize;
+        }
+
+        public GameObject Create ( MeshInputData inputData )
+        {
+            throw new System.NotImplementedException ();
         }
     }
 }
