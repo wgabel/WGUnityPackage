@@ -46,6 +46,14 @@ namespace WGPackage.Maps.GridMap
             }
         }
 
+        public Vector3Int ToVector3Int
+        {
+            get
+            {
+                return new Vector3Int ( x, 0, z );
+            }
+        }
+
         public Vector2 ToVector2Scaled ( float scale )
         {
             return new Vector2 ( x * scale, z * scale );

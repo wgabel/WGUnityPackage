@@ -7,10 +7,12 @@ namespace WGPackage.Rendering.DynamicDensityMap
         string MapName { get; }
         int Width { get; }
         int Height { get; }
-        int Division { get; }
-        int DivisionDepth { get; }
+        int CellFidelity { get; }
+        int CellsPerObject { get; }
+        float CellScale { get; }
         Vector3Int StartPosition { get; }
 
         int GetPoxelsDivisionLength { get; }
+        bool IsValid { get; }
     }
 }

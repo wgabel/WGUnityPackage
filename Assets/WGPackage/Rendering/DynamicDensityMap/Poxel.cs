@@ -2,13 +2,10 @@
 
 namespace WGPackage.Rendering.DynamicDensityMap
 {
-    public class Poxel
+    public class Poxel : IPoxel
     {
-        public bool isRoot = false;
-        public Vector3 PositionIn3d;
-        public int indexInParent;
-        public bool hasParent;
-        public Poxel[] innerCells;
-        public int depth;
+        public Vector3Int PostionInMap { get; set; }
+        public Vector3 PositionIn3d { get; set; }
+        public Poxel[] InnerPoxels { get; set; }
     }
 }

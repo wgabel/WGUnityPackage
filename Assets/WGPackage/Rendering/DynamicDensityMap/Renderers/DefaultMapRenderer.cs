@@ -8,9 +8,9 @@ namespace WGPackage.Rendering.DynamicDensityMap.Renderers
         private readonly IMapObjectCreator _mapObjectCreator;
 
         //TODO : Get creator by interface from IOC(By attribute - add to IOC when registered by attribute)
-        public DefaultMapRenderer () : this ( new DefaultMapObjectCreator() )
+        public DefaultMapRenderer () : this ( new DefaultMapObjectCreator () )
         {
-            
+
         }
 
         public DefaultMapRenderer ( IMapObjectCreator mapObjectCreator )

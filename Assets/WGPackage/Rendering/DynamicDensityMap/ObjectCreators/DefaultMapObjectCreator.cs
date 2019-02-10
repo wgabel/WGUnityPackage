@@ -1,5 +1,7 @@
 ﻿using System.IO;
+using System.Linq;
 using UnityEngine;
+using WGPackage.Maps.GridMap;
 using WGPackage.Rendering.DynamicDensityMap.Helpers;
 using WGPackage.Rendering.DynamicDensityMap.MaterialProviders;
 using WGPackage.Rendering.DynamicDensityMap.MeshCreators;
@@ -11,6 +13,7 @@ namespace WGPackage.Rendering.DynamicDensityMap.ObjectCreators
         private IMaterialProvider _materialProvider;
         private IMeshCreator _meshCreator;
         private string GetObjectName () => Path.GetRandomFileName ();
+        private Poxel[] mapData;
 
         public DefaultMapObjectCreator () : this (
             new DefaultMaterialProvider (),
@@ -27,43 +30,45 @@ namespace WGPackage.Rendering.DynamicDensityMap.ObjectCreators
 
         public GameObject Create ( IMapDefinition mapDefinition )
         {
-            string newObjectName = GetObjectName ();
-
-            GameObject root = CreateHolder ( 0, mapDefinition );
-
-            return root;
-
-            //return new GameObject ( mapDefinition.MapName + newObjectName )
-            //    .AddComponent<MeshRenderer> ().SetSharedMaterial ( _materialProvider.GetMaterial () ).gameObject
-            //    .AddComponent<MeshFilter> ().ApplyMesh ( _meshCreator.Create ( mapDefinition, newObjectName ) ).gameObject;
+            mapData = CreateData ( mapDefinition );
+            return CreateRootWithObjects ( mapDefinition.Width * mapDefinition.Height, mapDefinition, mapData );
         }
 
-        
-
-        private GameObject CreateHolder ( int currentDepth, IMapDefinition mapDefinition )
+        private Poxel[] CreateData ( IMapDefinition mapDefinition )
         {
-            //Cells are width * height
-            //FOr each cell:
-                //Create one object?
-                //Create SPECIFIED objects.
+            return new Poxel[mapDefinition.Width * mapDefinition.Height]
+                .Select ( ( item, indexer ) => CreatePoxel ( indexer, mapDefinition ) ).ToArray<Poxel> ();
 
-            string newObjectName = GetObjectName () + "_" + currentDepth;
-            GameObject g = new GameObject ( newObjectName );
-
-
-
-            for ( int d = 0; d < mapDefinition.GetPoxelsDivisionLength; d++ )
-            {
-                GameObject gInner = CreateHolder ( ++currentDepth, mapDefinition );
-                gInner.transform.SetParent ( g.transform );
-            }
-
-
-            if ( currentDepth < mapDefinition.DivisionDepth )
-            {
-                
-            }
-            return g;
         }
+
+        private Poxel CreatePoxel ( int index, IMapDefinition mapDefinition ) =>
+            new Poxel ()
+            {
+                PostionInMap = Helper.Convert1dTo2d ( index, mapDefinition.Height ).ToVector3Int,
+                PositionIn3d = Helper.Convert1dTo2d ( index, mapDefinition.Height ).ToVector3Scaled ( mapDefinition.CellScale )
+            };
+
+        private GameObject CreateRootWithObjects ( int length, IMapDefinition mapDefinition, Poxel[] allPoxels )
+        {
+            GameObject root = new GameObject ( GetObjectName () );
+            for ( int i = 0; i < length; i++ )
+            {
+                if ( i % mapDefinition.CellsPerObject == 0 )
+                {
+                    string objName = GetObjectName ();
+                    CreateGameObject ( objName, mapDefinition, allPoxels, i )
+                        .transform.SetParent ( root.transform );
+                }
+            }
+            return root;
+        }
+
+        private GameObject CreateGameObject ( string objName, IMapDefinition mapDefinition, Poxel[] allPoxels, int index ) =>
+            new GameObject ( objName )
+                .AddComponent<MeshRenderer> ().SetSharedMaterial ( _materialProvider.GetMaterial () )
+                .gameObject.AddComponent<MeshFilter> ()
+                    .ApplyMesh ( _meshCreator.Create ( mapDefinition, allPoxels, index, objName ) )
+                .gameObject;
+
     }
 }
