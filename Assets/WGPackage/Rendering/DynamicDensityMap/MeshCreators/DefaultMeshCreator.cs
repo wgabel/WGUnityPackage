@@ -34,7 +34,13 @@ namespace WGPackage.Rendering.DynamicDensityMap.MeshCreators
 
         public Mesh Create ( IMapDefinition mapDefinition, IPoxel[] allPoxels, int index, string newMeshName = "" )
         {
-            
+            //How to divide:
+            //https://answers.unity.com/questions/259127/does-anyone-have-any-code-to-subdivide-a-mesh-and.html
+            //How to use tuples for two ints as dictionary key:
+            //https://stackoverflow.com/questions/12570444/dictionary-where-the-key-is-a-pair-of-integers
+
+            //other reading:
+            //http://james-ramsden.com/subdivide-mesh-face-in-grasshopper-with-c/
             return new Mesh ();
         }
 
