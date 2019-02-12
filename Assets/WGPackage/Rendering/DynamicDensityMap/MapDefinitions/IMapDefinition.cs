@@ -11,8 +11,6 @@ namespace WGPackage.Rendering.DynamicDensityMap
         int CellsPerObject { get; }
         float CellScale { get; }
         Vector3Int StartPosition { get; }
-
-        int GetPoxelsDivisionLength { get; }
         bool IsValid { get; }
     }
 }

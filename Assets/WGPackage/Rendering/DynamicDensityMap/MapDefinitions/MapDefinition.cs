@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
+using WGPackage.Rendering.DynamicDensityMap.Helpers;
 
 namespace WGPackage.Rendering.DynamicDensityMap
 {
@@ -13,14 +15,6 @@ namespace WGPackage.Rendering.DynamicDensityMap
         public Vector3Int StartPosition { get; }
         public float CellScale { get; }
 
-        public int GetPoxelsDivisionLength
-        {
-            get
-            {
-                return 1;
-            }
-        }
-
         public bool IsValid
         {
             get
@@ -30,15 +24,18 @@ namespace WGPackage.Rendering.DynamicDensityMap
             }
         }
 
-        public MapDefinition ( string name, int width, int height, int cellFidelity, int cellsPerObject, float cellScale, Vector3Int startPosition )
+        public MapDefinition ( string name, int width, int height, int cellFidelity, float cellScale, Vector3Int startPosition )
         {
             this.MapName = name;
             this.Width = width;
             this.Height = height;
             this.CellFidelity = cellFidelity;
-            this.CellsPerObject = cellsPerObject;
+            this.CellsPerObject = MathExtensions.GetCommonNumbers ( 
+                MathExtensions.GetAllDivisors ( width ), 
+                MathExtensions.GetAllDivisors ( height ) ).Last ();
             this.StartPosition = startPosition;
             this.CellScale = cellScale;
         }
+
     }
 }

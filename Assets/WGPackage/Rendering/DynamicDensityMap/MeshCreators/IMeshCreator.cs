@@ -9,6 +9,6 @@ namespace WGPackage.Rendering.DynamicDensityMap.MeshCreators
 {
     public interface IMeshCreator
     {
-        Mesh Create ( IMapDefinition mapDefinition, Poxel[] allPoxels, int i, string newMeshName = "" );
+        Mesh Create ( IMapDefinition mapDefinition, IPoxel[] allPoxels, int i, string newMeshName = "" );
     }
 }

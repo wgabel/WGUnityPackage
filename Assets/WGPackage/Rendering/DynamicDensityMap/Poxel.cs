@@ -7,5 +7,6 @@ namespace WGPackage.Rendering.DynamicDensityMap
         public Vector3Int PostionInMap { get; set; }
         public Vector3 PositionIn3d { get; set; }
         public Poxel[] InnerPoxels { get; set; }
+        public bool IsCreated { get; set; }
     }
 }
