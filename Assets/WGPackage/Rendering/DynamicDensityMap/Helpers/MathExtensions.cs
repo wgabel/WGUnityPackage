@@ -8,6 +8,11 @@ namespace WGPackage.Rendering.DynamicDensityMap.Helpers
 {
     public static class MathExtensions
     {
+        /// <summary>
+        /// Gets all divisors, that the input number can be divided by, and produce a whole number.
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
         public static List<int> GetAllDivisors ( int number )
         {
             List<int> d = new List<int> ();
@@ -22,6 +27,12 @@ namespace WGPackage.Rendering.DynamicDensityMap.Helpers
             return d;
         }
 
+        /// <summary>
+        /// Returns an array with common numbers from two input arrays.
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
         public static List<int> GetCommonNumbers ( List<int> p1, List<int> p2 )
         {
             return p1.Intersect ( p2 ).ToList ();

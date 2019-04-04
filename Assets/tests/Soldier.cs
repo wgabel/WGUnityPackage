@@ -14,7 +14,19 @@ namespace WGPackage.Data.Serialization.Test
     [System.Serializable]
     public class BaseEntityModel
     {
+        public string baseName;
         [SerializeField]
-        public virtual string BaseName { get; set; }
+        public virtual string BaseName
+        {
+            get
+            {
+                return BaseName;
+            }
+            set
+            {
+                baseName = value;
+            }
+        }
+
     }
 }

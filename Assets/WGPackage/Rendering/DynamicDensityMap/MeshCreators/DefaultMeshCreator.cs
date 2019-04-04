@@ -41,6 +41,20 @@ namespace WGPackage.Rendering.DynamicDensityMap.MeshCreators
 
             //other reading:
             //http://james-ramsden.com/subdivide-mesh-face-in-grasshopper-with-c/
+
+            //1. Create base cell as a 5 vertices construct.
+            //1.5. Add chunks checking here(in future) 
+            //2. After all cells are done, subdivide them to reach desiered fidelity
+
+            Vector3Int currentPoxelInMap = allPoxels[0].PostionInMap;
+            Vector3Int checkedPoxelInMap = new Vector3Int();
+
+            for ( int i = 0; i < allPoxels.Length; i++ )
+            {
+                checkedPoxelInMap = allPoxels[i + 1].PostionInMap;
+
+            }
+
             return new Mesh ();
         }
 

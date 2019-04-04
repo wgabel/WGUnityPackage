@@ -9,14 +9,16 @@ namespace WGPackage.Data.Serialization.Test
 {
     public class SimpleDataTest : MonoBehaviour
     {
+        public BaseEntityModel solider = new BaseEntityModel ();
+        public Pesant pesant = new Pesant ();
+
         [ContextMenu ( "Run test" )]
         public void TestSerialisation ()
         {
-            BaseEntityModel solider = new BaseEntityModel ();
             solider.BaseName = "Jerry";
             string soldierPath = BaseSerializer.SaveToJson<BaseEntityModel> ( solider, solider.BaseName, "tests", overwrite: true );
 
-            Pesant pesant = new Pesant ()
+            pesant = new Pesant ()
             {
                 BaseName = "bob",
                 Hp = 4,

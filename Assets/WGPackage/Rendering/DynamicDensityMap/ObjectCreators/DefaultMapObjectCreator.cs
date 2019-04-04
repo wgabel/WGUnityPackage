@@ -30,15 +30,14 @@ namespace WGPackage.Rendering.DynamicDensityMap.ObjectCreators
 
         public GameObject Create ( IMapDefinition mapDefinition )
         {
-            mapData = CreateData ( mapDefinition );
-            return CreateRootWithObjects ( mapDefinition.Width * mapDefinition.Height, mapDefinition, mapData );
+            mapData = CreatePoxelsData ( mapDefinition );
+            return CreateRootWithObjects ( mapDefinition, mapData );
         }
 
-        private Poxel[] CreateData ( IMapDefinition mapDefinition )
+        private Poxel[] CreatePoxelsData ( IMapDefinition mapDefinition )
         {
             return new Poxel[mapDefinition.Width * mapDefinition.Height]
                 .Select ( ( item, indexer ) => CreatePoxel ( indexer, mapDefinition ) ).ToArray<Poxel> ();
-
         }
 
         private Poxel CreatePoxel ( int index, IMapDefinition mapDefinition ) =>
@@ -48,19 +47,23 @@ namespace WGPackage.Rendering.DynamicDensityMap.ObjectCreators
                 PositionIn3d = Helper.Convert1dTo2d ( index, mapDefinition.Height ).ToVector3Scaled ( mapDefinition.CellScale )
             };
 
-        private GameObject CreateRootWithObjects ( int length, IMapDefinition mapDefinition, Poxel[] allPoxels )
+        //TODO : Redesign this
+        private GameObject CreateRootWithObjects ( IMapDefinition mapDefinition, Poxel[] allPoxels )
         {
-            GameObject root = new GameObject ( GetObjectName () );
-            for ( int i = 0; i < length; i++ )
-            {
-                if ( i % mapDefinition.CellsPerObject == 0 )
-                {
-                    string objName = GetObjectName ();
-                    CreateGameObject ( objName, mapDefinition, allPoxels, i )
-                        .transform.SetParent ( root.transform );
-                }
-            }
-            return root;
+            string objName = GetObjectName ();
+            return CreateGameObject ( objName, mapDefinition, allPoxels, 0 );
+                
+            //GameObject root = new GameObject ( GetObjectName () );
+            //for ( int i = 0; i < allPoxels.Length; i++ )
+            //{
+            //    if ( i % mapDefinition.CellsPerObject == 0 )
+            //    {
+            //        string objName = GetObjectName ();
+            //        CreateGameObject ( objName, mapDefinition, allPoxels, i )
+            //            .transform.SetParent ( root.transform );
+            //    }
+            //}
+            //return root;
         }
 
         private GameObject CreateGameObject ( string objName, IMapDefinition mapDefinition, Poxel[] allPoxels, int index ) =>

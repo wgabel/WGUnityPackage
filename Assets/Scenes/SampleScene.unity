@@ -358,3 +358,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fee57700a77afb4da5dd01407b52576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapName: unnamed Map
+  width: 2
+  height: 2
+  fidelity: 1
+  cellScale: 1
+  startPosition: {x: 0, y: 0, z: 0}
+  number: 6
+  number2: 8

@@ -30,11 +30,16 @@ namespace WGPackage.Rendering.DynamicDensityMap
             this.Width = width;
             this.Height = height;
             this.CellFidelity = cellFidelity;
-            this.CellsPerObject = MathExtensions.GetCommonNumbers ( 
-                MathExtensions.GetAllDivisors ( width ), 
-                MathExtensions.GetAllDivisors ( height ) ).Last ();
+            this.CellsPerObject = GetOptimalCellsPerObject ( width, height );
             this.StartPosition = startPosition;
             this.CellScale = cellScale;
+        }
+
+        private static int GetOptimalCellsPerObject ( int width, int height )
+        {
+            return MathExtensions.GetCommonNumbers (
+                MathExtensions.GetAllDivisors ( width ),
+                MathExtensions.GetAllDivisors ( height ) ).Last ();
         }
 
     }
